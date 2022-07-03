@@ -29,6 +29,42 @@
 				"Mac",
 				"Linux"
 			]
+		},
+		{
+			"Name": "AbilitySystemGameFeatureActions",
+			"Enabled": true
+		},
+		{
+			"Name": "GameFeatures",
+			"Enabled": true
+		},
+		{
+			"Name": "ModularGameplay",
+			"Enabled": true
+		},
+		{
+			"Name": "MassEntity",
+			"Enabled": true
+		},
+		{
+			"Name": "MassAI",
+			"Enabled": true
+		},
+		{
+			"Name": "MassGameplay",
+			"Enabled": true
+		},
+		{
+			"Name": "MassCrowd",
+			"Enabled": true
+		},
+		{
+			"Name": "MassEntityLabyrinthSystem",
+			"Enabled": true
+		},
+		{
+			"Name": "LabyrinthAlgorithms",
+			"Enabled": true
 		}
 	]
 }
