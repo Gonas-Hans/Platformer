@@ -39,10 +39,6 @@ void UMassLabyrinthGenerator::Generate(UObject& QueryOwner, TConstArrayView<FMas
 	
 	LabyrinthLogicSolver->BuildTransformFromSolveResult(InitialTransform, SolveResult, WallTransforms);
 	
-	UE_LOG(LogTemp, Warning, TEXT("Wall count %d"), SolveResult.WallCountForBuild)
-	UE_LOG(LogTemp, Warning, TEXT("available cell %d"), SolveResult.AvailableCell.Num())
-	UE_LOG(LogTemp, Warning, TEXT("cell with wall %d"), SolveResult.CellWithWall.Num())
-	UE_LOG(LogTemp, Warning, TEXT("wall transforms %d"), WallTransforms.Num())
 	
 	
 	//____________________________________________________________________________________________
