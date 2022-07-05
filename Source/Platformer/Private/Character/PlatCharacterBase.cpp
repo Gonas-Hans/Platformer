@@ -8,12 +8,6 @@ APlatCharacterBase::APlatCharacterBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(FName("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent);
-
-	FollowCamera = CreateDefaultSubobject<UCameraComponent>(FName("FollowCamera"));
-	FollowCamera->SetupAttachment(CameraBoom);
 	
 }
 

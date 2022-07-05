@@ -3,9 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "PlatCharacterBase.generated.h"
 
 UCLASS()
@@ -27,11 +25,5 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Camera")
-	USpringArmComponent* CameraBoom;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Camera")
-	UCameraComponent* FollowCamera;
 
 };
