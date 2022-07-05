@@ -586,3 +586,7 @@ FodyWeavers.xsd
 /Content/Developers
 
 /Plugins/Developer/RiderLink
+Plugins/GameFeatures/LabyrinthAlgorithms/Binaries
+Plugins/GameFeatures/LabyrinthAlgorithms/Intermediate
+Plugins/GameFeatures/MassEntityLabyrinthSystem/Binaries
+Plugins/GameFeatures/MassEntityLabyrinthSystem/Intermediate
