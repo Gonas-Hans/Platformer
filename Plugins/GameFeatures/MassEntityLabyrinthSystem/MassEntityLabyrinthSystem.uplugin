@@ -28,6 +28,14 @@
 		{
 			"Name": "LabyrinthAlgorithms",
 			"Enabled": true
+		},
+		{
+			"Name": "MassEntity",
+			"Enabled": true
+		},
+		{
+			"Name": "StructUtils",
+			"Enabled": true
 		}
 	]
 }
