@@ -100,13 +100,17 @@ void UGameFeatureAction_AddSpawnedActors::AddActorsToWorld(const FWorldContext& 
 						{
 							for (auto ActorTag : ActorItr->Tags)
 							{
-								if(ActorTag == ActorEntry.TargetPointActorTag)  SpawningTransform = ActorItr->GetActorTransform();
+								if(ActorTag == ActorEntry.TargetPointActorTag)
+								{
+									SpawningTransform = ActorItr->GetActorTransform();
+									AActor* NewActor = World->SpawnActor<AActor>(ActorEntry.ActorType, SpawningTransform);
+									SpawnedActors.Add(NewActor);
+								}
 							}
 						}
 					}
 				}
 				else  SpawningTransform = ActorEntry.SpawnTransform;
-				
 				AActor* NewActor = World->SpawnActor<AActor>(ActorEntry.ActorType, SpawningTransform);
 				SpawnedActors.Add(NewActor);
 			}
