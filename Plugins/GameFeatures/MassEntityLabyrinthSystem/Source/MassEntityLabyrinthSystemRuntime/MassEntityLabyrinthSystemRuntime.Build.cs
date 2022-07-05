@@ -25,7 +25,7 @@ public class MassEntityLabyrinthSystemRuntime : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core", "MassRepresentation", "LabyrinthAlgorithmsRuntime", 
+				"Core", "MassRepresentation", "LabyrinthAlgorithmsRuntime", "GameFeatures", 
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
