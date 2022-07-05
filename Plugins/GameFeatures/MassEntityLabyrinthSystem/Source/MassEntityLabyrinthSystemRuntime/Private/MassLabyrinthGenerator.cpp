@@ -29,8 +29,6 @@ void UMassLabyrinthGenerator::Generate(UObject& QueryOwner, TConstArrayView<FMas
 		UE_LOG(LogTemp, Warning, TEXT("Лабиринт Генератор может работать только на сцене, а его Овнер не является Актором"))
 		return;
 	}
-
-	
 	
 	const FSolveResult SolveResult = LabyrinthLogicSolver->SolveLabyrinth();
 
@@ -38,7 +36,6 @@ void UMassLabyrinthGenerator::Generate(UObject& QueryOwner, TConstArrayView<FMas
 	TArray<FTransform> WallTransforms{};
 	
 	LabyrinthLogicSolver->BuildTransformFromSolveResult(InitialTransform, SolveResult, WallTransforms);
-	
 	
 	
 	//____________________________________________________________________________________________

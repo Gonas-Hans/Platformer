@@ -78,7 +78,7 @@ void UEllerMazeAlgorithm::BuildTransformFromSolveResult_Implementation(
 			for(const FIntVector LabyrinthCell : SolveResult.CellWithWall)
 				
 			{
-				if(GetSolverSettings()->GenerateVerticalWalls)
+				if(GetSolverSettings()->bGenerateVerticalWalls)
 				{
 					FTransform OutPosition = InitialLabyrinthPosition;
 					CalculateTransform(InitialLabyrinthPosition
@@ -96,7 +96,7 @@ void UEllerMazeAlgorithm::BuildTransformFromSolveResult_Implementation(
 		{
 			for(const FIntVector LabyrinthCell : SolveResult.CellWithWall)
 			{
-				if(GetSolverSettings()->GenerateHorizontalWalls)
+				if(GetSolverSettings()->bGenerateHorizontalWalls)
 				{
 					FTransform OutPosition = InitialLabyrinthPosition;
 					CalculateTransform(InitialLabyrinthPosition

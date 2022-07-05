@@ -43,24 +43,32 @@ public:
 	// used cell count
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
 	FIntVector LabyrinthArea{20, 20, 1};
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
+	bool bGenerateVerticalWalls{true};
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
+	bool bGenerateHorizontalWalls{true};
+
+	// used for generate vertical line of walls
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings", meta=(editcondition = "bGenerateVerticalWalls"))
+	FWallSettings Vertical_Wall_Settings{};
 	
 	// used for generate horizontal line of walls
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings", meta=(editcondition = "bGenerateHorizontalWalls"))
 	FWallSettings Horizontal_Wall_Settings{};
 	
-	// used for generate vertical line of walls
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
-	FWallSettings Vertical_Wall_Settings{};
-
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
-	bool GenerateVerticalWalls{true};
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
-	bool GenerateHorizontalWalls{true};
 	
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings", meta = (ClampMin = "0", UIMin = "0"))
 	//int32 LabyrinthLineCountPerExecution{1};
+	
+
+#if WITH_EDITOR
+	
+	UFUNCTION(BlueprintCallable, CallInEditor, Category = "WithEditor_Debug")
+	void RESPAWN(){OnLabyrinthSettingsChangedDelegate.Broadcast(NAME_None);};
+
+#endif // WITH_EDITOR
 
 	
 	
