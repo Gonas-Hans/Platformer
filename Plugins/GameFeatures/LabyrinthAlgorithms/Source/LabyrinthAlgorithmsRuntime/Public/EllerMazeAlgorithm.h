@@ -25,7 +25,13 @@ public:
 
 	virtual void BuildTransformFromSolveResult_Implementation(FTransform InitialLabyrinthPosition, FSolveResult SolveResult, TArray<FTransform>& Transforms) override;
 
-	
+
+	virtual FORCEINLINE void ResetLabyrinth() override
+	{
+		CurrentLine = 0;
+		CurrentLineType = ELabyrinthLineType::Vertical;
+		LabyrinthCellAndItsSet.Empty();
+	}
 
 	
 protected:
@@ -42,8 +48,8 @@ private:
 	void SolveVerticalLine(FSolveResult& OutResult);
 	void SolveHorizontalLine(FSolveResult& OutResult);
 
-	void CalculateTransform(const FTransform& InitTransform, const FIntVector& LabyrinthCell, const FVector& CellLenght, const FVector& Offset, const
-	                        FTransform& AdditionalCustomTransform, FTransform
+	void CalculateTransform(const FTransform& InitTransform, const FIntVector& LabyrinthCell, const FVector& CellSize, const FTransform&
+	                        TransformOffset, FTransform
 	                        & OutTransform) const;
 	
 	ELabyrinthLineType CurrentLineType{ELabyrinthLineType::Vertical};

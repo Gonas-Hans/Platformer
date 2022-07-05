@@ -36,6 +36,7 @@ struct FSolveResult
 	GENERATED_BODY()
 	
 	// bool значение показывает где стена а где проход
+	// FIntVector --> Labyrinth Line/ Cell Num
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TMap<FIntVector, bool> AllCells;
 
@@ -90,7 +91,9 @@ public:
 	void BuildTransformFromSolveResult(FTransform InitialLabyrinthPosition, FSolveResult SolveResult, TArray<FTransform>& OutTransforms);
 	
 	virtual void BuildTransformFromSolveResult_Implementation(FTransform InitialLabyrinthPosition, FSolveResult SolveResult, TArray<FTransform>& OutTransforms) {PURE_VIRTUAL(ULabyrinthLogicSolverBase::SolveLabyrinth_Implementation)};
-	
+
+	UFUNCTION(BlueprintCallable)
+	virtual FORCEINLINE void ResetLabyrinth() {}
 	
 private:
 

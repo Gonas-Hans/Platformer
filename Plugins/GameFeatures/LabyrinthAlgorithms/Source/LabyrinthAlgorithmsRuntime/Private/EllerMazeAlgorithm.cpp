@@ -34,9 +34,6 @@ FSolveResult UEllerMazeAlgorithm::SolveLabyrinth_Implementation()
 				LabyrinthCellAndItsSet.Add(i, i);
 			}
 		}
-	
-
-	
 	auto OutResult = FSolveResult{};
 	OutResult.LineType =CurrentLineType;
 	switch (CurrentLineType)
@@ -44,14 +41,14 @@ FSolveResult UEllerMazeAlgorithm::SolveLabyrinth_Implementation()
 	case ELabyrinthLineType::Vertical:
 		{
 			
-			if (GetSolverSettings()->GenerateVerticalWalls) SolveVerticalLine(OutResult);
+			SolveVerticalLine(OutResult);
 			break;
 		}
 		
 	case ELabyrinthLineType::Horizontal:
 		{
-			if (GetSolverSettings()->GenerateHorizontalWalls) SolveHorizontalLine(OutResult);
-			CurrentLine += 1;
+			SolveHorizontalLine(OutResult);
+			
 			break;
 		}
 	default:
@@ -81,16 +78,16 @@ void UEllerMazeAlgorithm::BuildTransformFromSolveResult_Implementation(
 			for(const FIntVector LabyrinthCell : SolveResult.CellWithWall)
 				
 			{
-				FTransform OutPosition = InitialLabyrinthPosition;
-				CalculateTransform(InitialLabyrinthPosition
-				                   , LabyrinthCell
-				                   , SolverSettings->Vertical_Wall_Settings.CellLenght
-				                   , SolverSettings->Vertical_Wall_Settings.LocationOffset
-				                   , SolverSettings->Vertical_Wall_Settings.CustomTransform
-				                   , OutPosition
-				);
-				
-				OutTransforms.Add(OutPosition);
+				if(GetSolverSettings()->GenerateVerticalWalls)
+				{
+					FTransform OutPosition = InitialLabyrinthPosition;
+					CalculateTransform(InitialLabyrinthPosition
+									   , LabyrinthCell
+									   , SolverSettings->Vertical_Wall_Settings.CellSize
+									   , SolverSettings->Vertical_Wall_Settings.TransformOffset
+									   , OutPosition);
+					OutTransforms.Add(OutPosition);
+				}
 			}
 			return;
 			
@@ -99,15 +96,16 @@ void UEllerMazeAlgorithm::BuildTransformFromSolveResult_Implementation(
 		{
 			for(const FIntVector LabyrinthCell : SolveResult.CellWithWall)
 			{
-				
-				FTransform OutPosition = InitialLabyrinthPosition;
-				CalculateTransform(InitialLabyrinthPosition
-				                   , LabyrinthCell
-				                   , SolverSettings->Horizontal_Wall_Settings.CellLenght
-				                   , SolverSettings->Horizontal_Wall_Settings.LocationOffset
-				                   , SolverSettings->Horizontal_Wall_Settings.CustomTransform
-				                   , OutPosition);
-				OutTransforms.Add(OutPosition);
+				if(GetSolverSettings()->GenerateHorizontalWalls)
+				{
+					FTransform OutPosition = InitialLabyrinthPosition;
+					CalculateTransform(InitialLabyrinthPosition
+									   , LabyrinthCell
+									   , SolverSettings->Horizontal_Wall_Settings.CellSize
+									   , SolverSettings->Horizontal_Wall_Settings.TransformOffset
+									   , OutPosition);
+					OutTransforms.Add(OutPosition);
+				}
 			}
 			return;  
 		}
@@ -120,18 +118,17 @@ void UEllerMazeAlgorithm::BuildTransformFromSolveResult_Implementation(
 
 void UEllerMazeAlgorithm::CalculateTransform(const FTransform& InitTransform
 	, const FIntVector& LabyrinthCell
-	, const FVector& CellLenght
-	, const FVector& Offset
-	, const FTransform& AdditionalCustomTransform
+	, const FVector& CellSize
+	, const FTransform& TransformOffset
 	, FTransform& OutTransform) const
 {
-	const FVector WallLocation = FVector(LabyrinthCell) * CellLenght + Offset;
+	
+	const FVector WallLocation = FVector(LabyrinthCell) * CellSize + TransformOffset.GetLocation();
 	const	FVector RotatedLocation = InitTransform.GetRotation().RotateVector(WallLocation);
-	
+
 	OutTransform.AddToTranslation(RotatedLocation);
-	
-	if(GetSolverSettings()->bCustomWallRotation) OutTransform.SetRotation(AdditionalCustomTransform.GetRotation());
-	OutTransform.SetScale3D(AdditionalCustomTransform.GetScale3D());
+	OutTransform.SetRotation(FQuat(OutTransform.GetRotation()) * FQuat(TransformOffset.GetRotation()));
+	OutTransform.SetScale3D(TransformOffset.GetScale3D());
 	
 }
 
@@ -145,6 +142,7 @@ void UEllerMazeAlgorithm::PreSolveLabyrinthLine()
 
 void UEllerMazeAlgorithm::PostSolveLabyrinthLine(FSolveResult& OutResultsHandle)
 {
+	if(CurrentLineType == ELabyrinthLineType::Horizontal) CurrentLine += 1;
 	++CurrentLineType;
 	GetOnLabyrinthSolvedDelegate().Broadcast(OutResultsHandle);
 }
@@ -160,28 +158,25 @@ void UEllerMazeAlgorithm::SolveVerticalLine(FSolveResult& OutResult)
 		
 		const int32* NextSet = LabyrinthCellAndItsSet.Find(CurrentCell+1);
 		
-		FIntVector Location = FIntVector{CurrentLine, CurrentCell, 0};
+		FIntVector CellLocation = FIntVector{CurrentLine, CurrentCell, 0};
 		
 		if(NextSet && CurrentSet)
 		{
 			bool bBuild = UKismetMathLibrary::RandomBool();
 			if(*CurrentSet == *NextSet || bBuild)
 			{
-				if(GetSolverSettings()->GenerateVerticalWalls)
-				{
-					OutResult.CellWithWall.Add(Location);
-					OutResult.AllCells.Add(Location, true);
-					OutResult.WallCountForBuild += 1;
-					continue;
-				}
+				OutResult.CellWithWall.Add(CellLocation);
+				OutResult.AllCells.Add(CellLocation, true);
+				OutResult.WallCountForBuild += 1;
+				continue;
 			}
 			else
 			{
 				LabyrinthCellAndItsSet.Add(CurrentCell+1, *CurrentSet);
 			}
 		}
-		OutResult.AvailableCell.Add(Location);
-		OutResult.AllCells.Add(Location, false);
+		OutResult.AvailableCell.Add(CellLocation);
+		OutResult.AllCells.Add(CellLocation, false);
 	}
 }
 
@@ -190,8 +185,6 @@ void UEllerMazeAlgorithm::SolveVerticalLine(FSolveResult& OutResult)
 
 void UEllerMazeAlgorithm::SolveHorizontalLine(FSolveResult& OutResult)
 {
-	// TODO есть замкнутые места, нужно разбираться
-	// TODO сделать сабсистему чтобы можно было спавнить pickup'сы тоже
 	
 	TMap<int32, TArray<int32>> SetAndItsCells{};
 	for(int32 CurrentCell{0}; CurrentCell < GetSolverSettings()->LabyrinthArea.X; CurrentCell++)
@@ -221,14 +214,11 @@ void UEllerMazeAlgorithm::SolveHorizontalLine(FSolveResult& OutResult)
 			{
 				LabyrinthCellAndItsSet.Add(CurrentCell, -1);
 				if(!bIsBuildWay) bStopBuildWay = true;
-				if(GetSolverSettings()->GenerateHorizontalWalls)
-				{
-					
-					OutResult.CellWithWall.Add(Location);
-					OutResult.AllCells.Add(Location, true);
-					OutResult.WallCountForBuild += 1;
-					continue;
-				}
+				
+				OutResult.CellWithWall.Add(Location);
+				OutResult.AllCells.Add(Location, true);
+				OutResult.WallCountForBuild += 1;
+				continue;
 			}
 			else bIsBuildWay = false;
 

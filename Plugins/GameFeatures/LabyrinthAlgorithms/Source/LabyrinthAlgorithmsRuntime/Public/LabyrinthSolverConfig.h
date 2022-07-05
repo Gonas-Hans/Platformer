@@ -16,14 +16,13 @@ struct FWallSettings
 {
 	GENERATED_BODY()
 	
+	// used for step size
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector CellLenght{200, 200, 200};
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector LocationOffset{0.f, 0.f, 0.f};
+	FVector CellSize{200, 200, 200};
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FTransform CustomTransform{};
+	FTransform TransformOffset{FRotator(0, 0, 0), FVector(0, 0, 0), FVector(1, 1, 1)};
+	
 };
 
 
@@ -41,12 +40,9 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintReadOnly)
 	FOnLabyrinthSettingsChanged OnLabyrinthSettingsChangedDelegate;
 	
-	// считает все в целых клетках
+	// used cell count
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
-	FIntVector LabyrinthArea{2000, 2000, 1};
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
-	FIntVector LabyrinthCellArea{200, 200, 0};
+	FIntVector LabyrinthArea{20, 20, 1};
 	
 	// used for generate horizontal line of walls
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
@@ -62,12 +58,9 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
 	bool GenerateHorizontalWalls{true};
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
-	bool bCustomWallRotation{false};
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings", meta = (ClampMin = "0", UIMin = "0"))
-	int32 LabyrinthLineCountPerExecution{1};
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings", meta = (ClampMin = "0", UIMin = "0"))
+	//int32 LabyrinthLineCountPerExecution{1};
 
 	
 	
