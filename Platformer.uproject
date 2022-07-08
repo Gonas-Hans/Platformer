@@ -65,6 +65,10 @@
 		{
 			"Name": "LabyrinthAlgorithms",
 			"Enabled": true
+		},
+		{
+			"Name": "LightWeightInstancesEditor",
+			"Enabled": true
 		}
 	]
 }

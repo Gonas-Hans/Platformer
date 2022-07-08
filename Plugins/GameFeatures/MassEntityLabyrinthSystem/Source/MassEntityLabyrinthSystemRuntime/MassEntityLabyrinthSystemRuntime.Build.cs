@@ -44,6 +44,11 @@ public class MassEntityLabyrinthSystemRuntime : ModuleRules
 				, "MassEntity"
 				, "MassActors"
 				, "LabyrinthAlgorithmsRuntime"
+				, "GeometryCollectionEngine"
+				, "Chaos"
+				, "ChaosCore"
+				, "ChaosSolverEngine"
+				
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

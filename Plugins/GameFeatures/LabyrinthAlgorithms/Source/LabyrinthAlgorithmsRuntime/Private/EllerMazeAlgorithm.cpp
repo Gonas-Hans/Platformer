@@ -128,7 +128,8 @@ void UEllerMazeAlgorithm::CalculateTransform(const FTransform& InitTransform
 
 	OutTransform.AddToTranslation(RotatedLocation);
 	OutTransform.SetRotation(FQuat(OutTransform.GetRotation()) * FQuat(TransformOffset.GetRotation()));
-	OutTransform.SetScale3D(TransformOffset.GetScale3D());
+	if(GetSolverSettings()->bCanScalingWallMesh) OutTransform.SetScale3D(TransformOffset.GetScale3D());
+	else OutTransform.SetScale3D(FVector(1, 1,1));
 	
 }
 

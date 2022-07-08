@@ -61,7 +61,10 @@ public:
 	
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings", meta = (ClampMin = "0", UIMin = "0"))
 	//int32 LabyrinthLineCountPerExecution{1};
+
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LabyrinthSettings")
+	bool bCanScalingWallMesh{false};
 
 #if WITH_EDITOR
 	
