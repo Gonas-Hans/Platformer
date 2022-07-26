@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Abilities/PlatCharAbilitySystemComponent.h"
+#include "Abilities/AttributeSets/PlatCharAttributeSetBase.h"
 #include "GameFramework/Character.h"
 #include "PlatCharacterBase.generated.h"
 
@@ -18,6 +20,14 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Demo|Character")
+	UPlatCharAbilitySystemComponent* AbilitySystemComponent;
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Demo|Character")
+	UPlatCharAttributeSetBase* AttributeSetBase;
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Demo|Character")
+	FText CharacterName;
 
 public:	
 	// Called every frame
