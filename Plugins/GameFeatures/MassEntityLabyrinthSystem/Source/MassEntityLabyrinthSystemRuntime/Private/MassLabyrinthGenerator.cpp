@@ -10,6 +10,7 @@
 
 UMassLabyrinthGenerator::UMassLabyrinthGenerator()
 {
+	LabyrinthLogicSolver = CreateDefaultSubobject<ULabyrinthLogicSolverBase>(FName("LabyrinthLogicSolver"));
 }
 
 

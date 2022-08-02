@@ -33,7 +33,12 @@ public:
 		, FFinishedGeneratingSpawnDataSignature& FinishedGeneratingSpawnPointsDelegate
 		) const override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced)
-	ULabyrinthLogicSolverBase* LabyrinthLogicSolver;
 	
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ULabyrinthLogicSolverBase* GetLabyrinthLogicSolver() const { return LabyrinthLogicSolver;}
+
+protected:
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ULabyrinthLogicSolverBase* LabyrinthLogicSolver;
 };

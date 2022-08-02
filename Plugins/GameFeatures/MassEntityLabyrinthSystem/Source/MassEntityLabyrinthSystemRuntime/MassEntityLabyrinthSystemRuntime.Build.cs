@@ -25,7 +25,7 @@ public class MassEntityLabyrinthSystemRuntime : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core", "MassRepresentation", "LabyrinthAlgorithmsRuntime", "GameFeatures", 
+				"Core", "MassRepresentation", "LabyrinthAlgorithmsRuntime", "GameFeatures", "MassRepresentation"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -48,6 +48,14 @@ public class MassEntityLabyrinthSystemRuntime : ModuleRules
 				, "Chaos"
 				, "ChaosCore"
 				, "ChaosSolverEngine"
+				, "MassLOD"
+				, "MassRepresentation"
+				, "MassSimulation"
+				, "MassGameplayEditor"
+				, "GameplayTags"
+				
+					
+				
 				
 				// ... add private dependencies that you statically link with here ...	
 			}
